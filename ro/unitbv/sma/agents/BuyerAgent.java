@@ -18,14 +18,14 @@ public class BuyerAgent extends Agent {
     private AID[] sellerAgentsList;
     private static final int REQUEST_TIME = 10000;
     private BuyGui buyerInterface;
-	TopicManagementHelper topicHelper ;
-	final AID topic = topicHelper.createTopic("history");
+	private AID topic;
 
     //initialization method
     protected void setup() {
-        System.out.println("Buyer Agent " + getAID().getName() + " was created.");
+       System.out.println("Buyer Agent " + getAID().getName() + " was created.");
         try {
-			topicHelper = (TopicManagementHelper) getHelper(TopicManagementHelper.SERVICE_NAME);
+        	TopicManagementHelper topicHelper = (TopicManagementHelper) getHelper(TopicManagementHelper.SERVICE_NAME);
+        	topic = topicHelper.createTopic("history");
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -23,18 +23,21 @@ Boston, MA  02111-1307, USA.
 
 package ro.unitbv.sma.agents;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.messaging.TopicManagementHelper;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-
-/**
-   This example shows an agent that registers to receive messages about a given topic
-   @author Giovanni Caire - Telecom Italia
- */
 public class HistoryReceiverAgent extends Agent {
+
 	
 	protected void setup() {
 		try {
@@ -48,7 +51,12 @@ public class HistoryReceiverAgent extends Agent {
 				public void action() {
 					ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topic));
 					if (msg != null) {
-						System.out.println("Agent "+ myAgent.getLocalName()+" message " + msg.getContent() + " received.");
+						String message = "Agent "+ myAgent.getLocalName()+" message " + msg.getContent() + " received.";
+						try {
+						    Files.write(Paths.get("D:\\Stuff\\historyOfOperations.txt"), message.getBytes(), StandardOpenOption.APPEND);
+						}catch (IOException e) {
+						    //exception handling left as an exercise for the reader
+						}
 					}
 					else {
 						block();
@@ -57,7 +65,7 @@ public class HistoryReceiverAgent extends Agent {
 			} );
 		}
 		catch (Exception e) {
-			System.err.println("Agent "+getLocalName()+": ERROR registering to topic \"JADE\"");
+			System.err.println("Agent "+getLocalName()+": ERROR registering to topic \"history\"");
 			e.printStackTrace();
 		}
 	}
