@@ -1,12 +1,13 @@
 package ro.unitbv.sma.agents;
 
 import jade.core.Agent;
+import jade.core.ServiceException;
 import jade.core.AID;
 import jade.core.behaviours.*;
+import jade.core.messaging.TopicManagementHelper;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import ro.unitbv.sma.interfaces.BuyGui;
-import ro.unitbv.sma.interfaces.SaleGui;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -17,12 +18,21 @@ public class BuyerAgent extends Agent {
     private AID[] sellerAgentsList;
     private static final int REQUEST_TIME = 10000;
     private BuyGui buyerInterface;
+	TopicManagementHelper topicHelper ;
+	final AID topic = topicHelper.createTopic("history");
 
     //initialization method
     protected void setup() {
         System.out.println("Buyer Agent " + getAID().getName() + " was created.");
+        try {
+			topicHelper = (TopicManagementHelper) getHelper(TopicManagementHelper.SERVICE_NAME);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         buyerInterface = new BuyGui(this);
         buyerInterface.showGui();
+        
     }
 
     //destroyer method
@@ -40,6 +50,7 @@ public class BuyerAgent extends Agent {
         addBehaviour(new TickerBehaviour(this, REQUEST_TIME) {
             protected void onTick() {
                 System.out.println("Trying to buy " + productToBuy);
+				saveToHistory(productToBuy);
                 // Update the list of seller agents
                 DFAgentDescription agentDesc = new DFAgentDescription();
                 ServiceDescription sd = new ServiceDescription();
@@ -61,6 +72,13 @@ public class BuyerAgent extends Agent {
                 // Perform the request
                 myAgent.addBehaviour(new PurchaseRequest());
             }
+
+			private void saveToHistory(final String productToBuy) {
+				ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+				msg.addReceiver(topic);
+				msg.setContent(String.valueOf(getTickCount()) + " " + this.getAgent().getLocalName() + " : " + "Trying to buy " + productToBuy);
+				myAgent.send(msg);
+			}
         });
     }
     

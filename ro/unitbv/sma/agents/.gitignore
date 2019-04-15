@@ -6,3 +6,6 @@
 /SellerAgent$OfferRequestsServer.class
 /SellerAgent$PurchaseOrdersServer.class
 /SellerAgent.class
+/TopicMessageReceiverAgent.class
+/HistoryReceiverAgent$1.class
+/HistoryReceiverAgent.class
