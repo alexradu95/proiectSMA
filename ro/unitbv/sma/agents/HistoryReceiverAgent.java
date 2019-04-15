@@ -25,7 +25,6 @@ package ro.unitbv.sma.agents;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -53,7 +52,7 @@ public class HistoryReceiverAgent extends Agent {
 					if (msg != null) {
 						String message = "Agent "+ myAgent.getLocalName()+" message " + msg.getContent() + " received.";
 						try {
-						    Files.write(Paths.get("D:\\Stuff\\historyOfOperations.txt"), message.getBytes(), StandardOpenOption.APPEND);
+						    Files.write(Paths.get("historyOfOperations.txt"), message.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 						}catch (IOException e) {
 						    //exception handling left as an exercise for the reader
 						}
