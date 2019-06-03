@@ -38,7 +38,6 @@ public class HistoryReceiverAgent extends Agent {
 	@Override
 	protected void setup() {
 		try {			
-			// Add a behaviour collecting messages about topic "logger"
 			addBehaviour(new CyclicBehaviour(this) {
 				public void action() {
 					ACLMessage msg = receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
@@ -47,7 +46,7 @@ public class HistoryReceiverAgent extends Agent {
 						try {
 						    Files.write(Paths.get("historyOfActions.txt"), message.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 						}catch (IOException e) {
-						    //exception handling left as an exercise for the reader
+							e.printStackTrace();
 						}
 					}
 					else {
@@ -57,7 +56,6 @@ public class HistoryReceiverAgent extends Agent {
 			} );
 		}
 		catch (Exception e) {
-			System.err.println("Agent "+getLocalName()+": ERROR registering to topic \"history\"");
 			e.printStackTrace();
 		}
 	}
