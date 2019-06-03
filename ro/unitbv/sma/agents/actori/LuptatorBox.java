@@ -4,7 +4,6 @@ import jade.core.*;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.FIPAAgentManagement.AMSAgentDescription;
 import jade.lang.acl.MessageTemplate;
 import ro.unitbv.sma.agents.ActionsAndMessages;
 import ro.unitbv.sma.agents.FightSimulator;

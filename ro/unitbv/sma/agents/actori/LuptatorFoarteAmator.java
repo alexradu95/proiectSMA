@@ -4,12 +4,7 @@ import jade.core.*;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.AMSService;
-import jade.domain.FIPAAgentManagement.AMSAgentDescription;
-import jade.domain.FIPAAgentManagement.SearchConstraints;
 import jade.lang.acl.MessageTemplate;
-import jade.wrapper.*;
-import ro.unitbv.sma.agents.ActionsAndMessages;
 import ro.unitbv.sma.agents.FightSimulator;
 
 public class LuptatorFoarteAmator extends Agent {

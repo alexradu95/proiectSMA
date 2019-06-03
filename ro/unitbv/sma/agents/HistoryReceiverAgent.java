@@ -23,7 +23,6 @@ Boston, MA  02111-1307, USA.
 
 package ro.unitbv.sma.agents;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,21 +30,20 @@ import java.nio.file.StandardOpenOption;
 
 import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.messaging.TopicManagementHelper;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 public class HistoryReceiverAgent extends Agent {
 
-	
+	@Override
 	protected void setup() {
 		try {			
 			// Add a behaviour collecting messages about topic "logger"
 			addBehaviour(new CyclicBehaviour(this) {
 				public void action() {
-					ACLMessage msg = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+					ACLMessage msg = receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 					if (msg != null) {
-						String message = "Agent "+ myAgent.getLocalName()+" message " + msg.getContent() + " received.";
+						String message = "Agent "+ myAgent.getLocalName()+" message " + msg.getContent() + " at time: " + msg.getPostTimeStamp() + " received." + "\n";
 						try {
 						    Files.write(Paths.get("historyOfActions.txt"), message.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 						}catch (IOException e) {

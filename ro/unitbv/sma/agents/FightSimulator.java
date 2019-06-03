@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
@@ -38,8 +37,7 @@ public class FightSimulator extends Agent {
 	public void setup() {
 		prim = this;
 		container = prim.getContainerController();
-		System.out.println(prim.getLocalName());
-		getJFrame();
+		createFrame();
 		try {
 			createFiveAgents();
 		} catch (ControllerException e) {
@@ -47,11 +45,11 @@ public class FightSimulator extends Agent {
 		}
 	}
 
-	private JFrame getJFrame() {
+	private JFrame createFrame() {
 		if (jFrame == null) {
 			jFrame = new JFrame();
 			jFrame.setSize(new Dimension(610, 224));
-			jFrame.setContentPane(getJContentPane());
+			jFrame.setContentPane(addElementsToUI());
 			jFrame.setVisible(true);
 			jFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 				@Override
@@ -67,7 +65,7 @@ public class FightSimulator extends Agent {
 		return jFrame;
 	}
 
-	private JPanel getJContentPane() {
+	private JPanel addElementsToUI() {
 		if (jContentPane == null) {
 			jContentPane = new JPanel();
 			jContentPane.setLayout(null);
@@ -115,7 +113,7 @@ public class FightSimulator extends Agent {
 	private void sendMessageToAgents(String message) {
 		String item = jComboBox.getSelectedItem().toString();
 		ACLMessage send = new ACLMessage(ACLMessage.INFORM);
-		send.addReceiver(new AID("History", false));
+		send.addReceiver(new AID(HISTORY_AGENT, false));
 		if (item.contains("All")) {
 			send.addReceiver(new AID(AGENT_BOX, false));
 			send.addReceiver(new AID(AGENT_BOX_2, false));
