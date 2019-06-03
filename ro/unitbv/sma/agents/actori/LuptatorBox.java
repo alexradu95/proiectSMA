@@ -9,6 +9,7 @@ import jade.domain.FIPAAgentManagement.AMSAgentDescription;
 import jade.domain.FIPAAgentManagement.SearchConstraints;
 import jade.lang.acl.MessageTemplate;
 import jade.wrapper.*;
+import ro.unitbv.sma.agents.ActionsAndMessages;
 import ro.unitbv.sma.agents.Proiect;
 
 public class LuptatorBox extends Agent {
@@ -24,7 +25,7 @@ public class LuptatorBox extends Agent {
 	public void setup() {
 		c.setMaxResults(new Long(-1));
 		try {
-			System.out.println(this.getLocalName() + " a fost creat");
+			System.out.println(this.getLocalName() + " has been created");
 		} catch (Exception any) {
 			any.printStackTrace();
 		}
@@ -46,27 +47,27 @@ public class LuptatorBox extends Agent {
 				if (received.getContent().contains("kill")) {
 					ag.doDelete();
 				}
-				if (received.getContent().contains("Pumn")) {
-					Proiect.textArea.append(ag.getLocalName() + " s-a ferit!" + "\n");
+				else if (received.getContent().contains(ActionsAndMessages.PUNCH_ACTION)) {
+					Proiect.textArea.append(ag.getLocalName() + " dodged the punch!" + "\n");
 					ACLMessage send = received.createReply();
-					send.setContent("Ferit!");
+					send.setContent("Dodge");
 					send(send);
 				}
-				if (received.getContent().contains("Apara")) {
-					Proiect.textArea.append(ag.getLocalName() + " s-a retras un picior in spate!" + "\n");
+				else if (received.getContent().contains(ActionsAndMessages.DEFEND_ACTION)) {
+					Proiect.textArea.append(ag.getLocalName() + " moved one foot closer!" + "\n");
 					ACLMessage send = received.createReply();
-					send.setContent("Retras!");
+					send.setContent("Closer");
 					send(send);
 				}
-				if (received.getContent().contains("Picior")) {
-					Proiect.textArea.append(ag.getLocalName() + " s-a retras si a aruncat un pumn!" + "\n");
+				else if (received.getContent().contains(ActionsAndMessages.KICK_ACTION)) {
+					Proiect.textArea.append(ag.getLocalName() + " dodged and launched a fist!" + "\n");
 					ACLMessage send = received.createReply();
-					send.setContent("Retras!");
+					send.setContent("Counterattack");
 					send(send);
 				} else {
-					Proiect.textArea.append(ag.getLocalName() + " este confuz!" + "\n");
+					Proiect.textArea.append(ag.getLocalName() + " it's confuzed!" + "\n");
 					ACLMessage send = received.createReply();
-					send.setContent("Confuz!");
+					send.setContent("Confuzed");
 					send(send);
 				}
 			}

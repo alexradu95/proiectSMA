@@ -9,6 +9,7 @@ import jade.domain.FIPAAgentManagement.AMSAgentDescription;
 import jade.domain.FIPAAgentManagement.SearchConstraints;
 import jade.lang.acl.MessageTemplate;
 import jade.wrapper.*;
+import ro.unitbv.sma.agents.ActionsAndMessages;
 import ro.unitbv.sma.agents.Proiect;
 
 public class LuptatorKarate extends Agent {
@@ -46,19 +47,19 @@ public class LuptatorKarate extends Agent {
 				if (received.getContent().contains("kill")) {
 					ag.doDelete();
 				}
-				if (received.getContent().contains("Pumn")) {
+				else if (received.getContent().contains(ActionsAndMessages.PUNCH_ACTION)) {
 					Proiect.textArea.append(ag.getLocalName() + " l-a blocat cu mana!" + "\n");
 					ACLMessage send = received.createReply();
 					send.setContent("Blocat!");
 					send(send);
 				}
-				if (received.getContent().contains("Apara")) {
+				else if (received.getContent().contains(ActionsAndMessages.DEFEND_ACTION)) {
 					Proiect.textArea.append(ag.getLocalName() + " se apropie spre tine!" + "\n");
 					ACLMessage send = received.createReply();
 					send.setContent("Apropie!");
 					send(send);
 				}
-				if (received.getContent().contains("Picior")) {
+				else if (received.getContent().contains(ActionsAndMessages.KICK_ACTION)) {
 					Proiect.textArea.append(ag.getLocalName() + " sare in spate!" + "\n");
 					ACLMessage send = received.createReply();
 					send.setContent("Sare!");

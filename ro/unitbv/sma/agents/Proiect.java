@@ -38,10 +38,8 @@ public class Proiect extends Agent {
 		try {
 			createFiveAgents();
 		} catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ControllerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -90,7 +88,7 @@ public class Proiect extends Agent {
 			jSendPunch.setText("Punch!");
 			jSendPunch.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					sendMessageToAgents("Pumn");
+					sendMessageToAgents(ActionsAndMessages.PUNCH_ACTION);
 				}
 			});
 		}
@@ -100,11 +98,11 @@ public class Proiect extends Agent {
 	private JButton getKickButton() {
 		if (jSendKick == null) {
 			jSendPunch = new JButton();
-			jSendPunch.setBounds(new Rectangle(20, 180, 100, 140));
-			jSendPunch.setText("Punch!");
+			jSendPunch.setBounds(new Rectangle(130, 180, 100, 30));
+			jSendPunch.setText("Kick!");
 			jSendPunch.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					sendMessageToAgents("Pumn");
+					sendMessageToAgents(ActionsAndMessages.DEFEND_ACTION);
 				}
 			});
 		}
@@ -114,11 +112,11 @@ public class Proiect extends Agent {
 	private JButton getDefendButton() {
 		if (jSendDefend == null) {
 			jSendPunch = new JButton();
-			jSendPunch.setBounds(new Rectangle(20, 180, 100, 250));
-			jSendPunch.setText("Punch!");
+			jSendPunch.setBounds(new Rectangle(240, 180, 100, 30));
+			jSendPunch.setText("Defend!");
 			jSendPunch.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					sendMessageToAgents("Pumn");
+					sendMessageToAgents(ActionsAndMessages.KICK_ACTION);
 				}
 			});
 		}
@@ -161,7 +159,7 @@ public class Proiect extends Agent {
 	private JButton getJSend() {
 		if (jSend == null) {
 			jSend = new JButton();
-			jSend.setBounds(new Rectangle(72, 175, 132, 30));
+			jSend.setBounds(new Rectangle(270, 105, 70, 55));
 			jSend.setText("Send!");
 			jSend.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {

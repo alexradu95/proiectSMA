@@ -1,1 +1,1 @@
-http://192.168.189.1:7778/acc
+http://md1saq2c.ad001.siemens.net:7778/acc
