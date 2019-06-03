@@ -4,26 +4,15 @@ import jade.core.*;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.AMSService;
 import jade.domain.FIPAAgentManagement.AMSAgentDescription;
-import jade.domain.FIPAAgentManagement.SearchConstraints;
 import jade.lang.acl.MessageTemplate;
-import jade.wrapper.*;
 import ro.unitbv.sma.agents.ActionsAndMessages;
-import ro.unitbv.sma.agents.Proiect;
+import ro.unitbv.sma.agents.FightSimulator;
 
 public class LuptatorBox extends Agent {
 
-	public ACLMessage mesaj = null;
-	public Agent ag = this;
-	public String[] numeA = null;
-	AMSAgentDescription[] agents = null;
-	SearchConstraints c = new SearchConstraints();
-	AMSAgentDescription descriere = new AMSAgentDescription();
-	public boolean trimis = false;
-
+	@Override
 	public void setup() {
-		c.setMaxResults(new Long(-1));
 		try {
 			System.out.println(this.getLocalName() + " has been created");
 		} catch (Exception any) {
@@ -45,27 +34,27 @@ public class LuptatorBox extends Agent {
 
 			if (received != null) {
 				if (received.getContent().contains("kill")) {
-					ag.doDelete();
+					this.getAgent().doDelete();
 				}
 				else if (received.getContent().contains(ActionsAndMessages.PUNCH_ACTION)) {
-					Proiect.textArea.append(ag.getLocalName() + " dodged the punch!" + "\n");
+					FightSimulator.textArea.append(this.getAgent().getLocalName() + " dodged the punch!" + "\n");
 					ACLMessage send = received.createReply();
 					send.setContent("Dodge");
 					send(send);
 				}
 				else if (received.getContent().contains(ActionsAndMessages.DEFEND_ACTION)) {
-					Proiect.textArea.append(ag.getLocalName() + " moved one foot closer!" + "\n");
+					FightSimulator.textArea.append(this.getAgent().getLocalName() + " moved one foot closer!" + "\n");
 					ACLMessage send = received.createReply();
 					send.setContent("Closer");
 					send(send);
 				}
 				else if (received.getContent().contains(ActionsAndMessages.KICK_ACTION)) {
-					Proiect.textArea.append(ag.getLocalName() + " dodged and launched a fist!" + "\n");
+					FightSimulator.textArea.append(this.getAgent().getLocalName() + " dodged and launched a fist!" + "\n");
 					ACLMessage send = received.createReply();
 					send.setContent("Counterattack");
 					send(send);
 				} else {
-					Proiect.textArea.append(ag.getLocalName() + " it's confuzed!" + "\n");
+					FightSimulator.textArea.append(this.getAgent().getLocalName() + " it's confuzed!" + "\n");
 					ACLMessage send = received.createReply();
 					send.setContent("Confuzed");
 					send(send);

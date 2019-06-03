@@ -39,20 +39,15 @@ public class HistoryReceiverAgent extends Agent {
 
 	
 	protected void setup() {
-		try {
-			// Register to messages about topic "history"
-			TopicManagementHelper topicHelper = (TopicManagementHelper) getHelper(TopicManagementHelper.SERVICE_NAME);
-			final AID topic = topicHelper.createTopic("history");
-			topicHelper.register(topic);
-			
-			// Add a behaviour collecting messages about topic "history"
+		try {			
+			// Add a behaviour collecting messages about topic "logger"
 			addBehaviour(new CyclicBehaviour(this) {
 				public void action() {
-					ACLMessage msg = myAgent.receive(MessageTemplate.MatchTopic(topic));
+					ACLMessage msg = myAgent.receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 					if (msg != null) {
 						String message = "Agent "+ myAgent.getLocalName()+" message " + msg.getContent() + " received.";
 						try {
-						    Files.write(Paths.get("historyOfOperations.txt"), message.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+						    Files.write(Paths.get("historyOfActions.txt"), message.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 						}catch (IOException e) {
 						    //exception handling left as an exercise for the reader
 						}
